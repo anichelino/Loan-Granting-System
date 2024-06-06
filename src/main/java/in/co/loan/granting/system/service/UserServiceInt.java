@@ -10,7 +10,7 @@ import in.co.loan.granting.system.exception.DuplicateRecordException;
 
 public interface UserServiceInt {
 
-	public long add(UserDTO dto) throws DuplicateRecordException;
+	public void add(UserDTO dto) throws DuplicateRecordException;
 
 	public void delete(UserDTO dto);
 

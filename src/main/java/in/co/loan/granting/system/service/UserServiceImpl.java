@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import in.co.loan.granting.system.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -32,16 +33,15 @@ public class UserServiceImpl implements UserServiceInt {
 	@Autowired
 	private JavaMailSenderImpl mailSender;
 
+	@Autowired
+	private UserRepository userRepository;
+
 	@Override
 	@Transactional
-	public long add(UserDTO dto) throws DuplicateRecordException {
+	public void add(UserDTO dto) throws DuplicateRecordException {
 		log.info("UserServiceImpl Add method start");
-		UserDTO existDTO = dao.findByUserId(dto.getUserId());
-		if (existDTO != null)
-			throw new DuplicateRecordException("User Id is Already Exist");
-		long pk = dao.add(dto);
+		userRepository.save(dto);
 		log.info("UserServiceImpl Add method end");
-		return pk;
 	}
 
 	@Override

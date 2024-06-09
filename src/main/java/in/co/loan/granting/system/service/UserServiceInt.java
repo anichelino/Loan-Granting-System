@@ -2,10 +2,10 @@ package in.co.loan.granting.system.service;
 
 import java.util.List;
 
+import antlr.RecognitionException;
 import in.co.loan.granting.system.dto.UserDTO;
 import in.co.loan.granting.system.exception.DuplicateRecordException;
-
-
+import in.co.loan.granting.system.exception.RecordNotFoundException;
 
 
 public interface UserServiceInt {
@@ -14,9 +14,9 @@ public interface UserServiceInt {
 
 	public void delete(UserDTO dto);
 
-	public UserDTO findBypk(long pk);
+	public UserDTO findBypk(long pk) throws RecognitionException, RecordNotFoundException;
 
-	public UserDTO findByUserId(String userId);
+	public UserDTO findByUserId(String userId) throws RecordNotFoundException;
 
 	public void update(UserDTO dto) throws DuplicateRecordException;
 
@@ -28,9 +28,9 @@ public interface UserServiceInt {
 
 	public List<UserDTO> search(UserDTO dto, int pageNo, int pageSize);
 
-	public UserDTO authentication(UserDTO dto);
+	public UserDTO authentication(UserDTO dto) throws RecordNotFoundException;
 
-	public boolean changePassword(Long id, String oldPassword, String newPassword);
+	public boolean changePassword(Long id, String oldPassword, String newPassword) throws RecordNotFoundException;
 
 	public boolean forgetPassword(String login);
 

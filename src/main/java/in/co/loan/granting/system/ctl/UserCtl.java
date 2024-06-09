@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import antlr.RecognitionException;
+import in.co.loan.granting.system.exception.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +43,7 @@ public class UserCtl extends BaseCtl {
 
 	@GetMapping()
 	public String display(@RequestParam(required = false) Long id, Long pId, @ModelAttribute("form") UserForm form,
-			HttpSession session, Model model) {
+			HttpSession session, Model model) throws RecordNotFoundException, RecognitionException {
 		if (form.getId() > 0) {
 			UserDTO bean = service.findBypk(id);
 			form.populate(bean);
@@ -60,7 +62,7 @@ public class UserCtl extends BaseCtl {
 				dto.setStatus(status);
 				service.update(dto);
 			}
-		} catch (DuplicateRecordException e) {
+		} catch (DuplicateRecordException | RecognitionException | RecordNotFoundException e) {
 			e.printStackTrace();
 		}
 		return "redirect:/ctl/user/search";

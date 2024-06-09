@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import antlr.RecognitionException;
+import in.co.loan.granting.system.exception.RecordNotFoundException;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,8 +100,12 @@ public class AssignBGVerificationCtl extends BaseCtl {
 		} catch (DuplicateRecordException e) {
 			model.addAttribute("error", e.getMessage());
 			return "assignBGVerification";
-		}
-		return "assignBGVerification";
+		} catch (RecordNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (RecognitionException e) {
+            throw new RuntimeException(e);
+        }
+        return "assignBGVerification";
 	}
 
 	@RequestMapping(value = "/search", method = { RequestMethod.GET, RequestMethod.POST })

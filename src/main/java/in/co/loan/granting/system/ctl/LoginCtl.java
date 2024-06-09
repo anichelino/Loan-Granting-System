@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import antlr.RecognitionException;
+import in.co.loan.granting.system.exception.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -85,7 +87,7 @@ public class LoginCtl extends BaseCtl {
 
 	@PostMapping("/login")
 	public String submit(@RequestParam String operation, HttpSession session,
-			@Valid @ModelAttribute("form") LoginForm form, BindingResult result, Model model) {
+			@Valid @ModelAttribute("form") LoginForm form, BindingResult result, Model model) throws RecordNotFoundException {
 		log.info("LoginCtl login submit method start");
 		System.out.println("In dopost  LoginCtl");
 
@@ -215,7 +217,7 @@ public class LoginCtl extends BaseCtl {
 
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 	public String submitProfile(HttpSession session, @ModelAttribute("form") @Valid MyProfileForm form,
-			BindingResult bindingResult, @RequestParam(required = false) String operation, Model model) {
+			BindingResult bindingResult, @RequestParam(required = false) String operation, Model model) throws RecordNotFoundException, RecognitionException {
 
 		if (OP_RESET.equalsIgnoreCase(operation)) {
 			return "redirect:/profile";
@@ -248,7 +250,7 @@ public class LoginCtl extends BaseCtl {
 
 	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
 	public String submitChangePassword(HttpSession session, @ModelAttribute("form") @Valid ChangePasswordForm form,
-			BindingResult bindingResult, Model model) {
+			BindingResult bindingResult, Model model) throws RecordNotFoundException, RecognitionException {
 
 		if (bindingResult.hasErrors()) {
 			return "changePassword";
@@ -280,7 +282,7 @@ public class LoginCtl extends BaseCtl {
 
 	@RequestMapping(value = "/forgetPassword", method = RequestMethod.POST)
 	public String display(@ModelAttribute("form") @Valid ForgetPasswordForm form, BindingResult bindingResult,
-			Model model) {
+			Model model) throws RecordNotFoundException {
 
 		if (bindingResult.hasErrors()) {
 			return "forgetPassword";

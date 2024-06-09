@@ -26,7 +26,7 @@ public class LoanGrantingSystemConfigration  implements WebMvcConfigurer{
 	@Bean(name = "tilesConfigure")
 	public TilesConfigurer getTilesConfigure() {
 		TilesConfigurer tilesConfigure = new TilesConfigurer();
-		tilesConfigure.setDefinitions("/WEB-INF/tiles.xml");
+		tilesConfigure.setDefinitions("WEB-INF/tiles.xml");
 		return tilesConfigure;
 	}
 
@@ -35,6 +35,7 @@ public class LoanGrantingSystemConfigration  implements WebMvcConfigurer{
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
+
 
 	/*
 	 * @Bean public MultipartResolver multipartResolver() { return new
